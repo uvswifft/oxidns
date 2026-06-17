@@ -9,7 +9,7 @@ use thiserror::Error;
 use tokio::sync::Mutex;
 
 use crate::infra::error::DnsError;
-use crate::plugin::provider::Provider;
+use crate::plugin::provider::{Provider, ProviderRuntimeStatus};
 
 #[derive(Debug, Error)]
 pub(crate) enum ProviderReloadError {
@@ -50,6 +50,10 @@ impl ProviderRuntimeControl {
                 tag: self.provider.tag().to_string(),
             })?;
         self.provider.reload().await.map_err(Into::into)
+    }
+
+    pub(crate) fn status(&self) -> ProviderRuntimeStatus {
+        self.provider.runtime_status()
     }
 }
 
