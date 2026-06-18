@@ -157,6 +157,10 @@ impl Provider for GeoIpProvider {
         Ok(())
     }
 
+    fn supports_reload(&self) -> bool {
+        true
+    }
+
     fn supports_ip_matching(&self) -> bool {
         true
     }
